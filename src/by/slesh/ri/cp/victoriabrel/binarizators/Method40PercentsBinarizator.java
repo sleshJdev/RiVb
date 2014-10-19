@@ -3,7 +3,7 @@ package by.slesh.ri.cp.victoriabrel.binarizators;
 import java.awt.image.BufferedImage;
 
 public class Method40PercentsBinarizator extends AbstractBinarizator {
-	private static final int INIT_PERCENTS = 40;
+	public static int sPercents = 40;
 
 	@Override
 	public BinaryResultBundle binarization(BufferedImage src) {
@@ -15,16 +15,16 @@ public class Method40PercentsBinarizator extends AbstractBinarizator {
 	}
 
 	private int findThresholdForMethod40Percents(BinaryResultBundle bundle) {
-		int size = bundle.width * bundle.height;
-		int constrain = size * INIT_PERCENTS / 100;
-		int collector = 0;
+		double size = bundle.width * bundle.height;
+		double collector = 0;
+		double limit = sPercents / 100.0;
 		for (int brighness = 0; brighness < 256; ++brighness) {
 			collector += bundle.repeatsPixels[brighness];
-			if (collector / size > constrain) {
+			double ratio = collector / size;
+			if (ratio > limit) {
 				return --brighness;
 			}
 		}
 		return 0;
 	}
-
 }

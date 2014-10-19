@@ -23,27 +23,27 @@ import by.slesh.ri.cp.victoriabrel.binarizators.Method40PercentsBinarizator;
 import by.slesh.ri.cp.victoriabrel.binarizators.ThresholdBinarizator;
 
 public class MainFrame extends JFrame implements ActionListener {
-	private static final long           serialVersionUID                 = -5050395057549630032L;
-	private static final int            HEIGHT                           = 600;
-	private static final int            WIDTH                            = 1000;
+	private static final long serialVersionUID = -5050395057549630032L;
+	private static final int HEIGHT = 600;
+	private static final int WIDTH = 1000;
 
-	private static final String         MENU_ITEM_OPEN                   = "Открыть";
-	private static final String         MENU_FILE                        = "Файл";
+	private static final String MENU_ITEM_OPEN = "Открыть";
+	private static final String MENU_FILE = "Файл";
 
-	private static final String         MENU_PROPERTIES                  = "Настройки";
-	private static final String         MENU_ITEM_SETTINGS               = "Показать окно настроект";
+	private static final String MENU_PROPERTIES = "Настройки";
+	private static final String MENU_ITEM_SETTINGS = "Показать окно настроект";
 
-	private static final String         MENU_ACTION                      = "Действия";
-	private static final String         MENU_SUB_BINARIZATION            = "Бинаризация";
-	private static final String         MENU_ITEM_BINARIZATION_120       = "Метод 120";
-	private static final String         MENU_ITEM_BINARIZATION_40        = "Метод 40%";
-	private static final String         MENU_ITEM_BINARIZATION_THRESHOLD = "По порогу";
+	private static final String MENU_ACTION = "Действия";
+	private static final String MENU_SUB_BINARIZATION = "Бинаризация";
+	private static final String MENU_ITEM_BINARIZATION_120 = "Метод 120";
+	private static final String MENU_ITEM_BINARIZATION_40 = "Метод 40%";
+	private static final String MENU_ITEM_BINARIZATION_THRESHOLD = "По порогу";
 
-	private SurfacePanel                mSurfacePanel;
+	private SurfacePanel mSurfacePanel;
 
-	private Method120Binaryzator        mMethod120Binaryzator            = new Method120Binaryzator();
-	private Method40PercentsBinarizator mMethod40PercentsBinarizator     = new Method40PercentsBinarizator();
-	private ThresholdBinarizator        mThresholdBinarizator            = new ThresholdBinarizator();
+	private Method120Binaryzator mMethod120Binaryzator = new Method120Binaryzator();
+	private Method40PercentsBinarizator mMethod40PercentsBinarizator = new Method40PercentsBinarizator();
+	private ThresholdBinarizator mThresholdBinarizator = new ThresholdBinarizator();
 
 	public MainFrame() {
 		super("|Курсовой проект|Распознование имени преподователя|Виктория Брель|");
@@ -67,8 +67,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		} catch (IOException ioe) {
 			showMessage(ioe.getMessage());
 		}
-		SettingsFrameDialog.setThresholdChangeValueListener(mThresholdBinarizator);
-
 		mSurfacePanel = new SurfacePanel();
 		add(mSurfacePanel, BorderLayout.CENTER);
 

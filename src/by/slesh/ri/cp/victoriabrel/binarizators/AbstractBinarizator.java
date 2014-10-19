@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public abstract class AbstractBinarizator {
-	public static int sImageType = BufferedImage.TYPE_3BYTE_BGR;
+	private static int sImageType = BufferedImage.TYPE_3BYTE_BGR;
 
 	protected int[] prepareBundleAndGetRgbPixels(BufferedImage src, BinaryResultBundle bundle) {
 		int w = src.getWidth();
