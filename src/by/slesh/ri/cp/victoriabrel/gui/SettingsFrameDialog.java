@@ -42,7 +42,7 @@ public class SettingsFrameDialog extends JFrame {
 
 	private static final long serialVersionUID = 5165862660719450891L;
 	private final int WIDTH = 300;
-	private final int HEIGHT = 100;
+	private final int HEIGHT = 200;
 	private static SettingsFrameDialog mInstance;
 
 	private SettingsFrameDialog() {
