@@ -13,7 +13,7 @@ public abstract class AbstractBinarizator {
 		int[] rgbPixels = src.getRGB(0, 0, w, h, null, w, w);
 		bundle.width = w;
 		bundle.height = h;
-		bundle.repeatsPixels = countRepeatsPixels(rgbPixelsToGray(rgbPixels));
+		bundle.repeats = countRepeatsPixels(rgbPixelsToGray(rgbPixels));
 		bundle.target = new BufferedImage(w, h, AbstractBinarizator.sImageType);
 		return rgbPixels;
 	}

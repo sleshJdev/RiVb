@@ -19,7 +19,7 @@ public class Method40PercentsBinarizator extends AbstractBinarizator {
 		double collector = 0;
 		double limit = sPercents / 100.0;
 		for (int brighness = 0; brighness < 256; ++brighness) {
-			collector += bundle.repeatsPixels[brighness];
+			collector += bundle.repeats[brighness];
 			double ratio = collector / size;
 			if (ratio > limit) {
 				return --brighness;

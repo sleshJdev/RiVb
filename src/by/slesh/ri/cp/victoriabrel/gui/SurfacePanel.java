@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 
 import by.slesh.ri.cp.victoriabrel.binarizators.AbstractBinarizator;
 import by.slesh.ri.cp.victoriabrel.binarizators.BinaryResultBundle;
+import by.slesh.ri.cp.victoriabrel.ipt.Skeletonizator;
 
 public class SurfacePanel extends JPanel {
 	private static final long serialVersionUID = -3893100366850568189L;
@@ -28,6 +29,12 @@ public class SurfacePanel extends JPanel {
 		mSourceBox.setIcon(new ImageIcon(mSource));
 	}
 
+	public void skeletonize(){
+	    Skeletonizator s = new Skeletonizator();
+	    s.skeletonization(mTarget);
+	    mTargetBox.setIcon(new ImageIcon(mTarget));
+	}
+	
 	public void binarization(AbstractBinarizator binarizator) {
 		if (mSource == null) {
 			return;

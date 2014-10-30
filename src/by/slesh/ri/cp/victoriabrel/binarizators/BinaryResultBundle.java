@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 public final class BinaryResultBundle {
 	public int           width;
 	public int           height;
-	public int[]         repeatsPixels;
+	public int[]         repeats;
 	public int           threshold;
 	public int           offset;
 	public BufferedImage target;
