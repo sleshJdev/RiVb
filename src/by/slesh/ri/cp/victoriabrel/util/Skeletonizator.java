@@ -1,10 +1,13 @@
-package by.slesh.ri.cp.victoriabrel.ipt;
+package by.slesh.ri.cp.victoriabrel.util;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * Implements Zhang-Suen thinning algorithm
+ */
 public class Skeletonizator extends AbstractTool {
     private static final int[][] mOffsets = { { 0, -1 }, { 1, -1 }, { 1, 0 }, { 1, 1 }, { 0, 1 },
 	    { -1, 1 }, { -1, 0 }, { -1, -1 }, { 0, -1 } };
@@ -59,7 +62,7 @@ public class Skeletonizator extends AbstractTool {
 	    int posY = y + mOffsets[i][1];
 	    int posX = x + mOffsets[i][0];
 	    int pos = w * posY + posX;
-	    if (sourceRgb[pos] == _1) {
+	    if (sourceRgb[pos] == _1){
 		++count;
 	    }
 	}
@@ -76,7 +79,7 @@ public class Skeletonizator extends AbstractTool {
 		posY = y + mOffsets[i + 1][1];
 		posX = x + mOffsets[i + 1][0];
 		pos = w * posY + posX;
-		if (sourceRgb[pos] == _1) {
+		if (sourceRgb[pos] == _1){
 		    count++;
 		}
 	    }
