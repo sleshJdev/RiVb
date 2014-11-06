@@ -24,8 +24,7 @@ public class MainFrameView extends JFrame implements MainViewInterface {
     private static final int WIDTH = 1000;
 
     public MainFrameView() {
-//        super("|Курсовой проект|Распознование имени преподователя|Виктория Брель|");
-        super("Привет Викуля!!!");
+        super("|Курсовой проект|Распознование имени преподователя|Виктория Брель|");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((screenSize.getWidth() - WIDTH) / 2);
         int y = (int) ((screenSize.getHeight() - HEIGHT) / 2);
