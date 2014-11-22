@@ -13,49 +13,50 @@ import by.slesh.ri.cp.victoriabrel.app.view.service.MainViewInterface;
 
 public class ActionController implements ActionListener {
 
-    private class MouseClickAdapter extends MouseAdapter {
+	private class MouseClickAdapter extends MouseAdapter {
 
-        @Override
-        public void mouseClicked(MouseEvent arg0) {
-            Point location = new Point(arg0.getPoint());
-            mImageBoxesView.getLocationOnImage(location);
-            System.out.println("1=" + arg0.getPoint());
-            System.out.println("2=" + location);
-            mModel.setStartPointForBugSegmentator(location);
-            mImageBoxesView.updateTarget(mModel.getmTargetImage());
-        }
-    }
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
 
-    private Model mModel;
-    private ActionViewInterface mActionView;
-    private ImageBoxesViewInterface mImageBoxesView;
+			Point location = new Point(arg0.getPoint());
+			mImageBoxesView.getLocationOnImage(location);
+			mModel.setStartPointForBugSegmentator(location);
+			mImageBoxesView.updateTarget(mModel.getmTargetImage());
+		}
+	}
 
-    public ActionController(MainViewInterface view, Model model) {
-        mModel = model;
-        mImageBoxesView = view.getImageBoxesViewInterfaceImpl();
-        mImageBoxesView.addTargetImageBoxClickListener(new MouseClickAdapter());
-        mActionView = view.getActionViewInterfaceImpl();
-        mActionView.addSkeletizationClickListener(this);
-        mActionView.addBugSegmentClickListener(this);
-        mActionView.addHistogramSegmentClickListener(this);
-    }
+	private Model					mModel;
+	private ActionViewInterface		mActionView;
+	private ImageBoxesViewInterface	mImageBoxesView;
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-        case ActionViewInterface.ACTION_SKELETON:
-            mModel.skeletonization();
-            mImageBoxesView.updateTarget(mModel.getmTargetImage());
-            break;
-        case ActionViewInterface.ACTION_SEGMENT_HISTOGRAM:
-            mModel.binarization();
-            mModel.histogramSegment();
-            mImageBoxesView.updateTarget(mModel.getmTargetImage());
-            break;
-        case ActionViewInterface.ACTION_SEGMENT_BUG:
-            mModel.bugSegment();
-            mImageBoxesView.updateTarget(mModel.getmTargetImage());
-            break;
-        }
-    }
+	public ActionController(MainViewInterface view, Model model) {
+
+		mModel = model;
+		mImageBoxesView = view.getImageBoxesViewInterfaceImpl();
+		mImageBoxesView.addTargetImageBoxClickListener(new MouseClickAdapter());
+		mActionView = view.getActionViewInterfaceImpl();
+		mActionView.addSkeletizationClickListener(this);
+		mActionView.addBugSegmentClickListener(this);
+		mActionView.addHistogramSegmentClickListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		switch (e.getActionCommand()) {
+		case ActionViewInterface.ACTION_SKELETON:
+			mModel.skeletonization();
+			mImageBoxesView.updateTarget(mModel.getmTargetImage());
+			break;
+		case ActionViewInterface.ACTION_SEGMENT_HISTOGRAM:
+			mModel.binarization();
+			mModel.histogramSegment();
+			mImageBoxesView.updateTarget(mModel.getmTargetImage());
+			break;
+		case ActionViewInterface.ACTION_SEGMENT_BUG:
+			mModel.bugSegment();
+			mImageBoxesView.updateTarget(mModel.getmTargetImage());
+			break;
+		}
+	}
 }

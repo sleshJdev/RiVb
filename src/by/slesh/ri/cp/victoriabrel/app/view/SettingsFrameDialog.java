@@ -118,30 +118,30 @@ public class SettingsFrameDialog extends JFrame {
         panel3.add(scrollBar);
         panel3.add(tf3);
 
-        JPanel panel4 = new JPanel();
-        panel4.add(new JLabel("Порог для сегментации"));
-        JTextField tf4 = new JTextField(3);
-        tf4.setText(Integer.toString(HistogramSegmentator.sThreshold));
-        tf4.setEditable(false);
-        scrollBar = new JScrollBar(JScrollBar.HORIZONTAL, HistogramSegmentator.sThreshold, 1, 0, 500);
-        scrollBar.setPreferredSize(new Dimension(150, 20));
-        scrollBar.getModel().addChangeListener(new BoundedChangeListener(new Command() {
-
-            @Override
-            public void execute(int value) {
-                tf4.setText(Integer.toString(value));
-                HistogramSegmentator.sThreshold = value;
-            }
-        }));
-        panel4.add(scrollBar);
-        panel4.add(tf4);
+//        JPanel panel4 = new JPanel();
+//        panel4.add(new JLabel("Порог для сегментации"));
+//        JTextField tf4 = new JTextField(3);
+//        tf4.setText(Integer.toString(HistogramSegmentator.sThreshold));
+//        tf4.setEditable(false);
+//        scrollBar = new JScrollBar(JScrollBar.HORIZONTAL, HistogramSegmentator.sThreshold, 1, 0, 500);
+//        scrollBar.setPreferredSize(new Dimension(150, 20));
+//        scrollBar.getModel().addChangeListener(new BoundedChangeListener(new Command() {
+//
+//            @Override
+//            public void execute(int value) {
+//                tf4.setText(Integer.toString(value));
+//                HistogramSegmentator.sThreshold = value;
+//            }
+//        }));
+//        panel4.add(scrollBar);
+//        panel4.add(tf4);
 
         setLayout(new GridLayout(4, 1));
 
         add(panel1);
         add(panel2);
         add(panel3);
-        add(panel4);
+//        add(panel4);
 
         pack();
     }

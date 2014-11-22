@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 public abstract class AbstractTool {
 
-    protected static final int IMAGE_TYPE = BufferedImage.TYPE_4BYTE_ABGR;
+	public static final int IMAGE_TYPE = BufferedImage.TYPE_4BYTE_ABGR;
 
     public static final int _0 = Color.WHITE.getRGB();
     public static final int _1 = Color.BLACK.getRGB();

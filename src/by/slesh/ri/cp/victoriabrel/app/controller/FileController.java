@@ -16,39 +16,41 @@ import by.slesh.ri.cp.victoriabrel.app.view.service.OpenListener;
 
 public class FileController implements OpenListener, ActionListener {
 
-    private Model mModel;
-    private MainViewInterface mView;
-    private FileViewInterface mFileView;
-    private ImageBoxesViewInterface mImageBoxesView;
+	private Model					mModel;
+	private MainViewInterface		mView;
+	private FileViewInterface		mFileView;
+	private ImageBoxesViewInterface	mImageBoxesView;
 
-    public FileController(MainViewInterface view, Model model) {
-        mModel = model;
-        mView = view;
-        mImageBoxesView = view.getImageBoxesViewInterfaceImpl();
-        mFileView = view.getFileViewInterfaceImpl();
-        mFileView.addOpenClickListener(this);
-        mFileView.addSettingClickListener(this);
-    }
+	public FileController(MainViewInterface view, Model model) {
+		mModel = model;
+		mView = view;
+		mImageBoxesView = view.getImageBoxesViewInterfaceImpl();
+		mFileView = view.getFileViewInterfaceImpl();
+		mFileView.addOpenClickListener(this);
+		mFileView.addSettingClickListener(this);
+	}
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-        case FileViewInterface.ACTION_SETTINGS:
-            mView.showBinSettings();
-            break;
-        }
-    }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		switch (e.getActionCommand()) {
+		case FileViewInterface.ACTION_SETTINGS:
+			mView.showBinSettings();
+			break;
+		}
+	}
 
-    @Override
-    public void openImage(File file) {
-        try {
-            BufferedImage image = ImageIO.read(file);
-            mModel.setmSourceImage(image);
-            mModel.setmTargetImage(image);
-            mImageBoxesView.updateSource(mModel.getmSourceImage());
-            mImageBoxesView.updateTarget(mModel.getmTargetImage());
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
+	@Override
+	public void openImage(File file) {
+		try {
+			BufferedImage image = ImageIO.read(file);
+			mModel.setmSourceImage(image);
+			mModel.setmTargetImage(image);
+			mModel.process();
+			mImageBoxesView.updateSource(mModel.getmSourceImage());
+			mImageBoxesView.updateTarget(mModel.getmTargetImage());
+			mImageBoxesView.updateRegion(mModel.getmRegionImage());
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
 }

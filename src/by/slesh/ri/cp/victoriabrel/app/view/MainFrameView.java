@@ -55,8 +55,8 @@ public class MainFrameView extends JFrame implements MainViewInterface {
 
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(mFileMenu);
-        menuBar.add(mActionMenu);
-        menuBar.add(mBinMenu);
+        //menuBar.add(mActionMenu);
+        //menuBar.add(mBinMenu);
         setJMenuBar(menuBar);
     }
 

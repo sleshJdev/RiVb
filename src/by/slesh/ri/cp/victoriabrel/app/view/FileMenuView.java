@@ -39,7 +39,7 @@ public class FileMenuView extends JMenu implements FileViewInterface {
         mOpenMenuItem.addActionListener(new ClickAdapte());
         mSettingsMenuItem = new JMenuItem(ACTION_SETTINGS, new ImageIcon("resources/ic_properties.png"));
         add(mOpenMenuItem);
-        add(mSettingsMenuItem);
+        //add(mSettingsMenuItem);
     }
 
     @Override
