@@ -16,14 +16,14 @@ import java.util.List;
  *
  */
 public class Recognizer {
-    private static double[][] mPatterns = { { 13.0, 2.0, 2.0, 0 },// Напрасников
-	                                                          // В. В.
+    private static double[][] mPatterns = { 
+	    { 13.0, 2.0, 2.0, 0 },// Напрасников В. В.
 	    { 10.0, 0.0, 2.0, 1 },// Ковалева И. В.
 	    { 9.0, 2.0, 1.0, 2 },// Кочуров В. А.
 	    { 10.0, 1.0, 2.0, 3 },// Бородуля А. В.
     };
 
-    private static String[] mNames = { "НаправсниковВВ", "КовалеваИВ",
+    private static String[] mNames = { "НапрасниковВВ", "КовалеваИВ",
 	    "КочуровВА", "БородуляАВ", };
 
     private static int mQuantityEtalons = mPatterns.length;

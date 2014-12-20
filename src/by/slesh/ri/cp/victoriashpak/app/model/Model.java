@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -212,10 +211,10 @@ public class Model {
     public void extractFullName() {
 	mSource = Tool.cut(mSource, mArea.x, mArea.y, mArea.x + mArea.width,
 	        mArea.y + mArea.height);
-	mSource = Tool.centrain1(mSource);
-	mSource = Tool.centrain(mSource);
 	mSource = LineDestroyer.destroyHorizontal(mSource, 1, 0.6);
 	mSource = LineDestroyer.destroyVertical(mSource, 1, 0.8);
+//	mSource = Tool.centrain1(mSource);
+	mSource = Tool.centrain(mSource);
 	mSource = Tool.centrain(mSource);
     }
 
@@ -242,7 +241,6 @@ public class Model {
 	    digit = SimpleSkeletonizator.skeleton(digit);
 	    digit = Tool.centrain1(digit);
 	    digits[t] = digit;
-	    save(digit);
 	}
 	mSymbols = digits;
 	return mSymbols;
@@ -250,16 +248,6 @@ public class Model {
 
     public BufferedImage[] recognize() {
 	return Recognizer.recognize(mSymbols);
-    }
-
-    private static int counter = 0;
-
-    private static void save(BufferedImage source) {
-	try {
-	    ImageIO.write(source, "png", new File("d:\\" + ++counter + ".png"));
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
     }
 
     private int countBlackPixels(BufferedImage image) {
