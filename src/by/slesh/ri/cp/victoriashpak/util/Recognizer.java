@@ -1,20 +1,11 @@
-/**
- * 
- */
 package by.slesh.ri.cp.victoriashpak.util;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
-import java.util.List;
 
-/**
- * @author slesh
- *
- */
 public class Recognizer {
     private static double[][] mPatterns = { 
 	    { 13.0, 2.0, 2.0, 0 },// Напрасников В. В.
@@ -98,53 +89,11 @@ public class Recognizer {
 	for (int k = 0; k < 3; ++k) {
 	    ++quantities[(int) d[k][1]];
 	}
-	// int max = quantities[0];
-	// int digit = 0;
-	// for(int k = 0; k < quantities.length; ++k){
-	// if(quantities[k] > max) {
-	// max = quantities[k];
-	// digit = k;
-	// }
-	// }
 	int digit = (int) d[0][1];
 	System.out.println("================" + Arrays.toString(quantities));
 	return digit;
     }
 
-    private static final int countSingletons(BufferedImage digit,
-	    List<Point> list) {
-	int h = digit.getHeight();
-	int w = digit.getWidth();
-	int[] pixels = digit.getRGB(0, 0, w, h, null, 0, w);
-	int quantity = 0;
-	for (int k = 0; k < pixels.length; ++k) {
-	    if (pixels[k] == Tool._1) {
-		int x = k % w;
-		int y = k / w;
-		if (countNeighborsForPixel(pixels, w, x, y) == 1) {
-		    list.add(new Point(x, y));
-		    ++quantity;
-		}
-	    }
-	}
-	return quantity;
-    }
-
-    private static int countNeighborsForPixel(int[] pixels, int offset, int x,
-	    int y) {
-	int quantity = 0;
-	for (int i = y - 1; i <= y + 1; ++i) {
-	    for (int j = x - 1; j <= x + 1; ++j) {
-		if (i == y && j == x) continue;
-		int index = i * offset + j;
-		if (index < 0 || index >= pixels.length) continue;
-		if (pixels[index] == Tool._1) {
-		    ++quantity;
-		}
-	    }
-	}
-	return quantity;
-    }
 
     private static final BufferedImage[] createAnswer(int id) {
 	final int W0 = 45;

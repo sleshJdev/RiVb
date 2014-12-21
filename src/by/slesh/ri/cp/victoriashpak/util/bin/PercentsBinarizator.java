@@ -5,10 +5,6 @@ import java.awt.image.BufferedImage;
 public class PercentsBinarizator extends AbstractBinarizator {
     public static int sPercents = 30;
 
-    public PercentsBinarizator(int percent) {
-	sPercents = percent;
-    }
-    
     @Override
     public BufferedImage bin(BufferedImage source) {
 	return super.binarization(source, findThreshold(source));

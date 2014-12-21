@@ -5,6 +5,8 @@ package by.slesh.ri.cp.victoriashpak.app.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,12 +19,34 @@ import by.slesh.ri.cp.victoriashpak.app.view.ControlViewInterface;
 import by.slesh.ri.cp.victoriashpak.app.view.ImageBoxesViewInterface;
 import by.slesh.ri.cp.victoriashpak.app.view.MainViewInterface;
 import by.slesh.ri.cp.victoriashpak.util.G;
+import by.slesh.ri.cp.victoriashpak.util.bin.PercentsBinarizator;
+import by.slesh.ri.cp.victoriashpak.util.bin.ThresholdBinarizator;
 
 /**
  * @author slesh
  *
  */
 public class Controller implements ActionListener {
+    private class BinPercentsChangeValueListener implements AdjustmentListener {
+
+	@Override
+	public void adjustmentValueChanged(AdjustmentEvent arg0) {
+	    PercentsBinarizator.sPercents = arg0.getValue();
+	    System.out.println(PercentsBinarizator.sPercents);
+	    mControlPanelView.updatePercentValue(arg0.getValue());
+	}
+    }
+
+    private class BinThresholdChangeValueListener implements AdjustmentListener {
+
+	@Override
+	public void adjustmentValueChanged(AdjustmentEvent arg0) {
+	    ThresholdBinarizator.sThreshold = arg0.getValue();
+	    System.out.println(ThresholdBinarizator.sThreshold);
+	    mControlPanelView.updateThresholdValue(arg0.getValue());
+	}
+    }
+
     private MainViewInterface mMainFrameView;
     private ControlViewInterface mControlPanelView;
     private ImageBoxesViewInterface mImageBoxesView;
@@ -37,7 +61,8 @@ public class Controller implements ActionListener {
 	mModel = model;
 	
 	mControlPanelView.addFindSymbolClickListener(this);
-	mControlPanelView.addBinarizateClickListener(this);
+	mControlPanelView.addBinPercentClickListener(this);
+	mControlPanelView.addBinThresholdClickListener(this);
 	mControlPanelView.addOpenFileClickListener(this);
 	mControlPanelView.addHistogramSegmentClickListener(this);
 	mControlPanelView.addTrimClickListener(this);
@@ -45,6 +70,8 @@ public class Controller implements ActionListener {
 	mControlPanelView.addExtractFullNameClickListener(this);
 	mControlPanelView.addSegmentFullNameClickListener(this);
 	mControlPanelView.addRecognizeNumberClickListener(this);
+	mControlPanelView.addPercentScrollListener(new BinPercentsChangeValueListener());
+	mControlPanelView.addThresholdScrollListener(new BinThresholdChangeValueListener());
     }
 
     @Override
@@ -56,8 +83,12 @@ public class Controller implements ActionListener {
 	    mModel.setSource(source);
 	    mMainFrameView.updateSource(mModel.getSource());
 	    break;
-	case ControlViewInterface.ACTION_BINARIZATION:
-	    mModel.binarization();
+	case ControlViewInterface.ACTION_BIN_PERCENT:
+	    mModel.binarization(new PercentsBinarizator());
+	    mMainFrameView.updateSource(mModel.getSource());
+	    break;
+	case ControlViewInterface.ACTION_BIN_THRESHOLD:
+	    mModel.binarization(new ThresholdBinarizator());
 	    mMainFrameView.updateSource(mModel.getSource());
 	    break;
 	case ControlViewInterface.ACTION_SEGMENT_HISTOGRAM:
@@ -81,9 +112,9 @@ public class Controller implements ActionListener {
 	    mImageBoxesView.updateAreaInterest(mModel.getSource());
 	    break;
 	case ControlViewInterface.ACTION_SEGMENT_FULLNAME:
-	    mImageBoxesView.updateSegmentFullName(mModel.segmentGroupNumber());
-	    mImageBoxesView.updateUnrecognizeFullName(mModel
-		    .skeletonizationSegmentSymbols());
+	    mImageBoxesView.updateSegmentFullName(mModel.segmentFullName());
+	    // mImageBoxesView.updateUnrecognizeFullName(mModel
+	    // .skeletonizationSegmentSymbols());
 	    break;
 	case ControlViewInterface.ACTION_RECOGNIZE:
 	    mImageBoxesView.updateRecognize(mModel.recognize());

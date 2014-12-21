@@ -13,6 +13,9 @@ public abstract class G {
 
     public static final int _0 = Color.WHITE.getRGB();
     public static final int _1 = Color.BLACK.getRGB();
+    
+    public static final int INIT_BIN_PERCENT = 7;
+    public static final int INIT_BIN_THRESHOLD = 120;
 
     protected static BufferedImage rgbToImage(int[] rgb, int w, int h) {
 	BufferedImage target = new BufferedImage(w, h, IMAGE_TYPE);

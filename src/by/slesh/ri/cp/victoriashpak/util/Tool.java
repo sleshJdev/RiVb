@@ -19,6 +19,16 @@ public class Tool {
     public static final int _1 = Color.BLACK.getRGB();
     public static final int _05 = Color.GRAY.getRGB();
 
+    public static void drawBlackIfNotWhite(BufferedImage source) {
+	int h = source.getHeight();
+	int w = source.getWidth();
+	int[] pixels = source.getRGB(0, 0, w, h, null, 0, w);
+	for (int k = 0; k < pixels.length; ++k) {
+	    if (pixels[k] != _0) pixels[k] = _1;
+	}
+	source.setRGB(0, 0, w, h, pixels, 0, w);
+    }
+    
     public static BufferedImage rgbToImage(int[] rgb, int w, int h) {
 
 	BufferedImage target = new BufferedImage(w, h, IMAGE_TYPE);

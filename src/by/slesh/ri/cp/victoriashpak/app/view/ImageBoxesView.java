@@ -41,12 +41,10 @@ public class ImageBoxesView extends JPanel implements ImageBoxesViewInterface {
 	mRecognizedPanel.setBorder(BorderFactory
 	        .createLineBorder(Color.BLUE, 1));
 
-	
-
-	JPanel panel11 = new JPanel(new GridLayout(4, 1, 5, 5));
+	JPanel panel11 = new JPanel(new GridLayout(3, 1, 5, 5));
 	panel11.add(new JScrollPane(mAreaInterestImageBox));
 	panel11.add(new JScrollPane(mFullNameSegmentedPanel));
-	panel11.add(new JScrollPane(mUnrecognizedPanel));
+//	panel11.add(new JScrollPane(mUnrecognizedPanel));
 	panel11.add(new JScrollPane(mRecognizedPanel));
 
 	JPanel panel13 = new JPanel(new BorderLayout());

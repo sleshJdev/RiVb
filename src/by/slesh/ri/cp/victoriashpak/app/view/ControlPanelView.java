@@ -1,29 +1,43 @@
 package by.slesh.ri.cp.victoriashpak.app.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import by.slesh.ri.cp.victoriashpak.util.G;
 
 public class ControlPanelView extends JPanel implements ControlViewInterface {
 
     private static final long serialVersionUID = -2454572918534173516L;
 
-    private JButton mBinarizationButton;
+    private JScrollBar mPercentScrollBar;
+    private JScrollBar mThresholdScrollBar;
+
+    private JTextField mPercentValueTextField;
+    private JTextField mThresholdValueTextField;
+
+    private JButton mPercentBinarizationButton;
+    private JButton mThresholdBinarizationButton;
     private JButton mHistogramSegmentButton;
     private JButton mOpenFileButton;
     private JButton mTrimButton;
     private JButton mExtractAreaInterestButton;
-    private JButton mNeuralNetworkUseButton;
-    private JButton mExtractGroupNumberButton;
-    private JButton mSegmentGroupNumberButton;
-    private JButton mRecognizeNumberButton;
+    private JButton mFindPLetterButton;
+    private JButton mExtractFullNameButton;
+    private JButton mSegmentFullNameButton;
+    private JButton mRecognizeFullNameButton;
 
     public ControlPanelView() {
 	setBorder(BorderFactory.createTitledBorder("œ¿Õ≈À‹ ”œ–¿¬À≈Õ»ﬂ"));
@@ -33,10 +47,27 @@ public class ControlPanelView extends JPanel implements ControlViewInterface {
 	mOpenFileButton.setForeground(Color.WHITE);
 	mOpenFileButton.setActionCommand(ACTION_FILE_OPEN);
 
-	mBinarizationButton = createButton("2 >> ¡»Õ¿–»«Œ¬¿“‹", ACTION_BINARIZATION,
-	        false);
-	mBinarizationButton.setBackground(new Color(40, 60, 40));
-	mBinarizationButton.setForeground(Color.WHITE);
+	mPercentBinarizationButton = createButton("2 >> œŒ œ–Œ÷≈Õ“”(1..100)",
+	        ACTION_BIN_PERCENT, false);
+	mPercentBinarizationButton.setBackground(new Color(40, 60, 150));
+	mPercentBinarizationButton.setForeground(Color.WHITE);
+	mPercentValueTextField = new JTextField(
+	        Integer.toString(G.INIT_BIN_PERCENT), 4);
+	mPercentValueTextField.setHorizontalAlignment(SwingConstants.CENTER);
+	mPercentScrollBar = new JScrollBar(JScrollBar.HORIZONTAL,
+	        G.INIT_BIN_PERCENT, 1, 0, 100);
+	mPercentScrollBar.setEnabled(false);
+
+	mThresholdBinarizationButton = createButton("2 >> œŒ œŒ–Œ√”(1..255)",
+	        ACTION_BIN_THRESHOLD, false);
+	mThresholdBinarizationButton.setBackground(new Color(150, 60, 40));
+	mThresholdBinarizationButton.setForeground(Color.WHITE);
+	mThresholdValueTextField = new JTextField(
+	        Integer.toString(G.INIT_BIN_THRESHOLD), 4);
+	mThresholdValueTextField.setHorizontalAlignment(SwingConstants.CENTER);
+	mThresholdScrollBar = new JScrollBar(JScrollBar.HORIZONTAL,
+	        G.INIT_BIN_THRESHOLD, 1, 0, 255);
+	mThresholdScrollBar.setEnabled(false);
 
 	/* Segment controls */
 	mHistogramSegmentButton = createButton("3 >> Œ√–¿Õ»◊»“‹",
@@ -48,52 +79,80 @@ public class ControlPanelView extends JPanel implements ControlViewInterface {
 	mTrimButton.setBackground(new Color(80, 120, 80));
 	mTrimButton.setForeground(Color.WHITE);
 
-	mExtractAreaInterestButton = createButton("5 >> ¬€ƒ≈À»“‹ Œ¡À¿—“‹ — \"‘»Œ\"",
+	mExtractAreaInterestButton = createButton(
+	        "5 >> ¬€ƒ≈À»“‹ Œ¡À¿—“‹ — \"‘»Œ\"",
 	        ACTION_EXTRACT_AREA_INTEREST, false);
 	mExtractAreaInterestButton.setBackground(new Color(100, 150, 100));
 	mExtractAreaInterestButton.setForeground(Color.BLACK);
 
-	mNeuralNetworkUseButton = createButton("6 >> Õ¿…“» ¡” ¬” \"–\"",
+	mFindPLetterButton = createButton("6 >> Õ¿…“» ¡” ¬” \"–\"",
 	        ACTION_FIND_SYMBOL, false);
-	mNeuralNetworkUseButton.setBackground(new Color(120, 180, 120));
-	mNeuralNetworkUseButton.setForeground(Color.BLACK);
+	mFindPLetterButton.setBackground(new Color(120, 180, 120));
+	mFindPLetterButton.setForeground(Color.BLACK);
 
-	mExtractGroupNumberButton = createButton("7 >> »«¬À≈◊‹ \"‘»Œ\"",
+	mExtractFullNameButton = createButton("7 >> »«¬À≈◊‹ \"‘»Œ\"",
 	        ACTION_EXTRACT_FULLNAME, false);
-	mExtractGroupNumberButton.setBackground(new Color(140, 210, 140));
-	mExtractGroupNumberButton.setForeground(Color.BLACK);
+	mExtractFullNameButton.setBackground(new Color(140, 210, 140));
+	mExtractFullNameButton.setForeground(Color.BLACK);
 
-	mSegmentGroupNumberButton = createButton("8 >> —≈√Ã≈Õ“»–Œ¬¿“‹ \"‘»Œ\"",
+	mSegmentFullNameButton = createButton("8 >> —≈√Ã≈Õ“»–Œ¬¿“‹ \"‘»Œ\"",
 	        ACTION_SEGMENT_FULLNAME, false);
-	mSegmentGroupNumberButton.setBackground(new Color(160, 240, 160));
-	mSegmentGroupNumberButton.setForeground(Color.BLACK);
+	mSegmentFullNameButton.setBackground(new Color(160, 240, 160));
+	mSegmentFullNameButton.setForeground(Color.BLACK);
 
-	mRecognizeNumberButton = createButton("9 >> –¿—œŒ«Õ¿“‹", ACTION_RECOGNIZE,
-	        false);
-	mRecognizeNumberButton.setBackground(new Color(240, 180, 240));
-	mRecognizeNumberButton.setForeground(Color.BLACK);
+	mRecognizeFullNameButton = createButton("9 >> –¿—œŒ«Õ¿“‹",
+	        ACTION_RECOGNIZE, false);
+	mRecognizeFullNameButton.setBackground(new Color(240, 180, 240));
+	mRecognizeFullNameButton.setForeground(Color.BLACK);
 
 	BoxLayout bl = new BoxLayout(this, BoxLayout.Y_AXIS);
 	setLayout(bl);
 
 	JPanel panel = null;
+	JPanel tempPanel = null;
+	JPanel panelTitle = null;
 
-	panel = new JPanel(new GridLayout(4, 1, 5, 5));
-	panel.add(mOpenFileButton);
-	panel.add(mBinarizationButton);
-	panel.add(mHistogramSegmentButton);
-	panel.add(mTrimButton);
+	panelTitle = new JPanel(new GridLayout(1, 2, 5, 5));
+	panelTitle.setBorder(BorderFactory.createTitledBorder("¡»Õ¿–»«¿÷»ﬂ"));
+	panel = new JPanel(new GridLayout(2, 1, 5, 5));
+	panel.add(mPercentBinarizationButton);
+	tempPanel = new JPanel(new BorderLayout(5, 5));
+	tempPanel.add(mPercentScrollBar, BorderLayout.CENTER);
+	tempPanel.add(mPercentValueTextField, BorderLayout.LINE_END);
+	panel.add(tempPanel);
+	panelTitle.add(panel);
+	panel = new JPanel(new GridLayout(2, 1, 5, 5));
+	panel.add(mThresholdBinarizationButton);
+	tempPanel = new JPanel(new BorderLayout(5, 5));
+	tempPanel.add(mThresholdScrollBar, BorderLayout.CENTER);
+	tempPanel.add(mThresholdValueTextField, BorderLayout.LINE_END);
+	panel.add(tempPanel);
+	panelTitle.add(panel);
+
+	panel = new JPanel(new GridLayout(5, 1, 5, 5));
+	bl = new BoxLayout(panel, BoxLayout.Y_AXIS);
+	panel.setLayout(bl);
+	tempPanel = new JPanel(new GridLayout(1, 2, 5, 5));
+	tempPanel.add(mOpenFileButton);
+	panel.add(tempPanel);
+	panel.add(new JPanel());
+	panel.add(panelTitle);
+	panel.add(new JPanel());
+	tempPanel = new JPanel(new GridLayout(1, 2, 5, 5));
+	tempPanel.add(mHistogramSegmentButton);
+	tempPanel.add(mTrimButton);
+	panel.add(tempPanel);
 	add(panel);
 
 	panel = new JPanel(new GridLayout(2, 2, 5, 5));
-	panel.add(mNeuralNetworkUseButton);
+	panel.add(mFindPLetterButton);
 	panel.add(mExtractAreaInterestButton);
-	panel.add(mExtractGroupNumberButton);
-	panel.add(mSegmentGroupNumberButton);
+	panel.add(mExtractFullNameButton);
+	panel.add(mSegmentFullNameButton);
 	add(panel);
 
 	panel = new JPanel(new GridLayout(1, 1, 5, 5));
-	panel.add(mRecognizeNumberButton);
+	panel.add(mRecognizeFullNameButton);
 	add(panel);
 
 	enableComponents(this, true);
@@ -130,8 +189,13 @@ public class ControlPanelView extends JPanel implements ControlViewInterface {
     }
 
     @Override
-    public void addBinarizateClickListener(ActionListener l) {
-	mBinarizationButton.addActionListener(l);
+    public void addBinPercentClickListener(ActionListener l) {
+	mPercentBinarizationButton.addActionListener(l);
+    }
+
+    @Override
+    public void addBinThresholdClickListener(ActionListener l) {
+	mThresholdBinarizationButton.addActionListener(l);
     }
 
     @Override
@@ -151,21 +215,41 @@ public class ControlPanelView extends JPanel implements ControlViewInterface {
 
     @Override
     public void addFindSymbolClickListener(ActionListener l) {
-	mNeuralNetworkUseButton.addActionListener(l);
+	mFindPLetterButton.addActionListener(l);
     }
 
     @Override
     public void addExtractFullNameClickListener(ActionListener l) {
-	mExtractGroupNumberButton.addActionListener(l);
+	mExtractFullNameButton.addActionListener(l);
     }
 
     @Override
     public void addSegmentFullNameClickListener(ActionListener l) {
-	mSegmentGroupNumberButton.addActionListener(l);
+	mSegmentFullNameButton.addActionListener(l);
     }
 
     @Override
     public void addRecognizeNumberClickListener(ActionListener l) {
-	mRecognizeNumberButton.addActionListener(l);
+	mRecognizeFullNameButton.addActionListener(l);
+    }
+
+    @Override
+    public void addPercentScrollListener(AdjustmentListener l) {
+	mPercentScrollBar.addAdjustmentListener(l);
+    }
+
+    @Override
+    public void addThresholdScrollListener(AdjustmentListener l) {
+	mThresholdScrollBar.addAdjustmentListener(l);
+    }
+
+    @Override
+    public void updatePercentValue(int newValue) {
+	mPercentValueTextField.setText(Integer.toString(newValue));
+    }
+
+    @Override
+    public void updateThresholdValue(int newValue) {
+	mThresholdValueTextField.setText(Integer.toString(newValue));
     }
 }

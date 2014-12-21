@@ -16,6 +16,7 @@ import by.slesh.ri.cp.victoriashpak.util.Recognizer;
 import by.slesh.ri.cp.victoriashpak.util.Resizer;
 import by.slesh.ri.cp.victoriashpak.util.Rotator;
 import by.slesh.ri.cp.victoriashpak.util.Tool;
+import by.slesh.ri.cp.victoriashpak.util.bin.AbstractBinarizator;
 import by.slesh.ri.cp.victoriashpak.util.bin.Binarizator;
 import by.slesh.ri.cp.victoriashpak.util.morph.ClearMorph;
 import by.slesh.ri.cp.victoriashpak.util.morph.ErodeMorph;
@@ -29,6 +30,7 @@ import by.slesh.ri.cp.victoriashpak.util.segment.RelationSegmentator;
 
 public class Model {
     private BufferedImage mSource;
+    private BufferedImage mOrigin;
 
     private static final int TARGET_WIDTH = 2552;
     private static final int TARGET_HEIGHT = 3510;
@@ -49,14 +51,16 @@ public class Model {
 	    mSource = Resizer.scaleUp(mSource, w, TARGET_HEIGHT, true);
 	if (h > TARGET_HEIGHT)
 	    mSource = Resizer.scaleLow(mSource, w, TARGET_HEIGHT, true);
+    
+	mOrigin = Tool.copyOf(mSource);
     }
 
     public BufferedImage getSource() {
 	return mSource;
     }
 
-    public void binarization() {
-	mSource = Binarizator.binarization(mSource);
+    public void binarization(AbstractBinarizator binarizator) {
+	mSource = binarizator.bin(mOrigin);
 	mSource = ClearMorph.clean(mSource, 5);
 	mSource = Rotator.rotate(mSource);
 	mSource = Tool.trim(mSource, 100, 100, 100, 100);
@@ -107,13 +111,14 @@ public class Model {
 		    BufferedImage subImage = mSource.getSubimage(0, y1, WW, WH);
 		    double np = countBlackPixels(subImage);
 		    if (np / WW / WH > 0.3) {
-			subImage = SimpleSkeletonizator.skeleton(subImage);
+//			subImage = SimpleSkeletonizator.skeleton(subImage);
 			Tool.makeEmptyBorders(subImage);
 			ContourWorker cw = new ContourWorker(subImage);
 			cw.drawResultOn(subImage);
 			Point[] centers = cw.getCentersOfContours();
 			int cs = Tool.countSingletons(subImage);
-			if (centers.length == 1 && cs >= 1) {
+//			if (centers.length == 1 && cs >= 1) {
+			if (centers.length == 1) {
 			    if (centers[0].y < WH / 2) {
 				try {
 				    BufferedImage arrow = ImageIO
@@ -213,17 +218,19 @@ public class Model {
 	        mArea.y + mArea.height);
 	mSource = LineDestroyer.destroyHorizontal(mSource, 1, 0.6);
 	mSource = LineDestroyer.destroyVertical(mSource, 1, 0.8);
-//	mSource = Tool.centrain1(mSource);
 	mSource = Tool.centrain(mSource);
 	mSource = Tool.centrain(mSource);
     }
 
     private BufferedImage[] mSymbols;
 
-    public BufferedImage[] segmentGroupNumber() {
+    public BufferedImage[] segmentFullName() {
 	mSource = Tool.centrain(mSource);
 	RelationSegmentator rs = new RelationSegmentator(mSource);
 	mSymbols = rs.segment();
+	for (BufferedImage symbol : mSymbols) {
+	    Tool.drawBlackIfNotWhite(symbol);
+        }
 	return mSymbols;
     }
 
